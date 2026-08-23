@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioAI - AI Resume to Portfolio Generator</title>
+    <meta name="description" content="Upload your resume and let AI transform your experience, skills, and projects into a professional portfolio website in minutes.">
+
+    <!-- CSS Design System -->
+    <link rel="stylesheet" href="/css/saas_style.css">
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="nav-brand" onclick="switchView('landing'); return false;">
+                ⚡ PortfolioAI <span class="brand-badge">SaaS 2.0</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" onclick="switchView('landing'); return false;">Home</a></li>
+                <li><a href="#" class="nav-link" onclick="switchView('upload'); return false;">Create Portfolio</a></li>
+                <li><a href="#" class="nav-link" onclick="switchView('dashboard'); return false;">My Portfolio</a></li>
+                <li><a href="#" class="nav-link" onclick="switchView('editor'); return false;">Live Editor</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                    GitHub
+                </a>
+                <button class="btn btn-primary" onclick="switchView('upload')">
+                    + Create Portfolio
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 1. LANDING / HOME PAGE VIEW -->
+        <section id="view-landing" class="view-section active">
+            <div class="container hero">
+                <div class="hero-pill">
+                    ✨ Powered by Gemini 3.6 Flash & Pydantic
+                </div>
+                <h1 class="hero-title">
+                    Turn Your Resume Into a <span class="hero-title-gradient">Stunning Portfolio</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload your resume and let AI transform your experience, skills and projects into a professional portfolio website in minutes.
+                </p>
+                <div class="hero-cta-group">
+                    <button class="btn btn-primary" onclick="switchView('upload')">
+                        Create My Portfolio →
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchView('upload')">
+                        See How It Works
+                    </button>
+                </div>
+                <div class="trust-bar">
+                    AI-powered • Fast • Professional • Fully customizable
+                </div>
+
+                <!-- Hero Visual Mockup Preview -->
+                <div class="mockup-container">
+                    <div class="mockup-frame">
+                        <div class="mockup-header">
+                            <span class="mockup-dot"></span>
+                            <span class="mockup-dot"></span>
+                            <span class="mockup-dot"></span>
+                            <span style="margin-left: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">alexmorgan.dev - Preview</span>
+                        </div>
+                        <div class="mockup-body">
+                            <div style="font-size: 0.85rem; color: var(--accent-blue); font-weight: 700; margin-bottom: 0.5rem;">SENIOR FULL-STACK & AI ENGINEER</div>
+                            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.75rem; color: #ffffff;">Hi, I'm Alex Morgan</h2>
+                            <p style="color: var(--text-secondary); max-width: 600px; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                                Innovative Senior Full-Stack Engineer with over 6 years of experience building scalable web applications, microservices, and AI-driven platforms.
+                            </p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <span style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">Python</span>
+                                <span style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">TypeScript</span>
+                                <span style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">FastAPI</span>
+                                <span style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">PostgreSQL</span>
+                                <span style="background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); padding: 0.25rem 0.65rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600;">AWS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. RESUME UPLOAD SECTION VIEW -->
+        <section id="view-upload" class="view-section">
+            <div class="container">
+                <div class="upload-wrapper">
+                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.75rem; font-weight: 800; font-family: var(--font-heading);">Upload Your Resume</h2>
+                        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem;">
+                            Supports PDF, DOCX, or TXT formats
+                        </p>
+                    </div>
+
+                    <!-- Drag & Drop Zone -->
+                    <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                        <span class="upload-icon">📄</span>
+                        <div class="upload-title">Drop your PDF here or browse files</div>
+                        <div class="upload-desc">Drag and drop your file here, or click to select from your computer</div>
+                        <button type="button" class="btn btn-secondary">Browse Files</button>
+                        <input type="file" id="fileInput" accept=".pdf,.docx,.txt" style="display: none;">
+                    </div>
+
+                    <!-- Selected File Pill -->
+                    <div class="file-pill" id="filePill">
+                        <div class="file-info">
+                            <span style="font-size: 1.5rem;">📋</span>
+                            <div>
+                                <div class="file-name" id="fileName">resume.pdf</div>
+                                <div class="file-size" id="fileSize">142 KB</div>
+                            </div>
+                        </div>
+                        <button class="btn-remove" onclick="removeFile()" title="Remove file">✕</button>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <button id="btnGenerate" class="btn btn-primary" style="width: 100%; padding: 0.85rem; font-size: 1rem;" onclick="startGeneration()" disabled>
+                            Generate Portfolio →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. AI GENERATION PROGRESS VIEW -->
+        <section id="view-loading" class="view-section">
+            <div class="container">
+                <div class="ai-loader-container">
+                    <div class="ai-spinner"></div>
+                    <h2 style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-heading);">Building your portfolio...</h2>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.35rem;">
+                        Gemini AI is analyzing your experience and designing your website
+                    </p>
+
+                    <!-- Animated Progress Step Checklist -->
+                    <ul class="ai-step-list">
+                        <li class="ai-step-item" id="step-1">
+                            <span class="step-icon">●</span> <span>Reading resume file</span>
+                        </li>
+                        <li class="ai-step-item" id="step-2">
+                            <span class="step-icon">○</span> <span>Extracting candidate information</span>
+                        </li>
+                        <li class="ai-step-item" id="step-3">
+                            <span class="step-icon">○</span> <span>Categorizing technical & soft skills</span>
+                        </li>
+                        <li class="ai-step-item" id="step-4">
+                            <span class="step-icon">○</span> <span>Organizing work experience & projects</span>
+                        </li>
+                        <li class="ai-step-item" id="step-5">
+                            <span class="step-icon">○</span> <span>Generating responsive HTML5 design</span>
+                        </li>
+                        <li class="ai-step-item" id="step-6">
+                            <span class="step-icon">○</span> <span>Finalizing your website</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. GENERATED PORTFOLIO DASHBOARD PREVIEW VIEW -->
+        <section id="view-dashboard" class="view-section">
+            <div class="container dashboard-layout">
+                <!-- Toolbar Header -->
+                <div class="dashboard-toolbar">
+                    <div class="toolbar-title">
+                        <span>Portfolio Preview</span>
+                        <span class="status-badge">● Generated</span>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <!-- Desktop / Mobile View Toggle -->
+                        <div class="view-toggle">
+                            <button class="toggle-btn active" id="btnDesktopView" onclick="setDeviceView('desktop')">Desktop 🖥️</button>
+                            <button class="toggle-btn" id="btnMobileView" onclick="setDeviceView('mobile')">Mobile 📱</button>
+                        </div>
+
+                        <button class="btn btn-secondary" onclick="switchView('editor')">
+                            ✏️ Edit Portfolio
+                        </button>
+                        <a href="/api/download-portfolio" download class="btn btn-primary">
+                            📥 Download HTML
+                        </a>
+                        <button class="btn btn-ghost" onclick="switchView('upload')">
+                            ⚡ Generate New
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Iframe Viewport Container -->
+                <div class="preview-viewport-container" id="viewportContainer">
+                    <iframe id="portfolioIframe" class="preview-iframe" src="/api/preview-portfolio"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SPLIT-SCREEN LIVE EDITOR VIEW -->
+        <section id="view-editor" class="view-section">
+            <div class="container" style="padding-top: 1rem;">
+                <div class="dashboard-toolbar" style="margin-bottom: 1rem;">
+                    <div class="toolbar-title">
+                        <span>Live Portfolio Editor</span>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-primary" onclick="saveEditorChanges()">
+                            💾 Save & Render
+                        </button>
+                        <button class="btn btn-secondary" onclick="switchView('dashboard')">
+                            ← Back to Preview
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Two-Panel Grid -->
+                <div class="editor-grid">
+                    <!-- Left Panel: Settings Controls -->
+                    <div class="editor-sidebar">
+                        <!-- Personal Info -->
+                        <div class="editor-section">
+                            <div class="editor-section-title">
+                                <span>👤 Personal Details</span>
+                            </div>
+                            <div class="editor-form-group">
+                                <div>
+                                    <label class="form-label">Full Name</label>
+                                    <input type="text" id="edit-name" class="form-input" placeholder="e.g. Alex Morgan">
+                                </div>
+                                <div>
+                                    <label class="form-label">Professional Title</label>
+                                    <input type="text" id="edit-title" class="form-input" placeholder="e.g. Senior Full-Stack Engineer">
+                                </div>
+                                <div>
+                                    <label class="form-label">Email Address</label>
+                                    <input type="email" id="edit-email" class="form-input" placeholder="e.g. alex@example.com">
+                                </div>
+                                <div>
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" id="edit-phone" class="form-input" placeholder="e.g. +1 555-234-5678">
+                                </div>
+                                <div>
+                                    <label class="form-label">Location</label>
+                                    <input type="text" id="edit-location" class="form-input" placeholder="e.g. San Francisco, CA">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div class="editor-section">
+                            <div class="editor-section-title">
+                                <span>📝 Professional Summary</span>
+                            </div>
+                            <div class="editor-form-group">
+                                <div>
+                                    <label class="form-label">Bio / Summary Statement</label>
+                                    <textarea id="edit-summary" class="form-textarea" rows="4" placeholder="Brief summary of your expertise..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="editor-section">
+                            <div class="editor-section-title">
+                                <span>🌐 Social & Web Links</span>
+                            </div>
+                            <div class="editor-form-group">
+                                <div>
+                                    <label class="form-label">GitHub URL</label>
+                                    <input type="url" id="edit-github" class="form-input" placeholder="https://github.com/username">
+                                </div>
+                                <div>
+                                    <label class="form-label">LinkedIn URL</label>
+                                    <input type="url" id="edit-linkedin" class="form-input" placeholder="https://linkedin.com/in/username">
+                                </div>
+                                <div>
+                                    <label class="form-label">Portfolio / Website URL</label>
+                                    <input type="url" id="edit-website" class="form-input" placeholder="https://yourwebsite.dev">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Panel: Real-time Live Preview Frame -->
+                    <div style="height: calc(100vh - 120px);">
+                        <iframe id="editorIframe" class="preview-iframe" style="height: 100%;" src="/api/preview-portfolio"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- JavaScript Controller -->
+    <script src="/js/app.js"></script>
+</body>
+</html>
