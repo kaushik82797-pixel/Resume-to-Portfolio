@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.personal.name if data.personal.name else "Professional Portfolio" }} | {{ data.personal.title if data.personal.title else "Developer Profile" }}</title>
+    <meta name="description" content="{{ data.summary | truncate(160) if data.summary else 'Professional developer portfolio' }}">
+
+    <!-- Inline CSS for Single-File Portability -->
+    <style>
+        {{ css_content | safe }}
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#hero" class="nav-logo">{{ data.personal.name if data.personal.name else "Portfolio" }}</a>
+            <ul class="nav-links">
+                {% if data.summary %}<li><a href="#about">About</a></li>{% endif %}
+                {% if has_skills %}<li><a href="#skills">Skills</a></li>{% endif %}
+                {% if data.experience %}<li><a href="#experience">Experience</a></li>{% endif %}
+                {% if data.projects %}<li><a href="#projects">Projects</a></li>{% endif %}
+                {% if data.education %}<li><a href="#education">Education</a></li>{% endif %}
+                {% if data.certifications %}<li><a href="#certifications">Certifications</a></li>{% endif %}
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+                <span id="themeIcon">☀️</span> <span id="themeText">Light</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            {% if data.personal.title %}
+            <span class="hero-subtitle">{{ data.personal.title }}</span>
+            {% endif %}
+            
+            <h1 class="hero-title">Hi, I'm {{ data.personal.name if data.personal.name else "a Passionate Developer" }}</h1>
+            
+            {% if data.personal.location %}
+            <div class="hero-role">📍 {{ data.personal.location }}</div>
+            {% endif %}
+
+            {% if data.summary %}
+            <p class="hero-summary">{{ data.summary }}</p>
+            {% endif %}
+
+            <div class="hero-actions">
+                {% if data.personal.email or data.personal.phone %}
+                <a href="#contact" class="btn btn-primary">✉️ Get in Touch</a>
+                {% endif %}
+                
+                {% if data.social_links.github %}
+                <a href="{{ data.social_links.github }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    ⚡ GitHub
+                </a>
+                {% endif %}
+
+                {% if data.social_links.linkedin %}
+                <a href="{{ data.social_links.linkedin }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    💼 LinkedIn
+                </a>
+                {% endif %}
+
+                {% if data.social_links.portfolio %}
+                <a href="{{ data.social_links.portfolio }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                    🌐 Website
+                </a>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- About Section -->
+        {% if data.summary %}
+        <section id="about" class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="card">
+                <p style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8;">
+                    {{ data.summary }}
+                </p>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Skills Section -->
+        {% if has_skills %}
+        <section id="skills" class="section">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="skills-grid">
+                
+                {% if data.skills.programming_languages %}
+                <div class="card">
+                    <h3 class="skill-category-title">💻 Programming Languages</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.programming_languages %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.frameworks %}
+                <div class="card">
+                    <h3 class="skill-category-title">🚀 Frameworks</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.frameworks %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.libraries %}
+                <div class="card">
+                    <h3 class="skill-category-title">📚 Libraries & SDKs</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.libraries %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.databases %}
+                <div class="card">
+                    <h3 class="skill-category-title">🗄️ Databases</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.databases %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.cloud %}
+                <div class="card">
+                    <h3 class="skill-category-title">☁️ Cloud & DevOps</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.cloud %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.tools %}
+                <div class="card">
+                    <h3 class="skill-category-title">🛠️ Tools & Software</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.tools %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.soft_skills %}
+                <div class="card">
+                    <h3 class="skill-category-title">🤝 Soft Skills</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.soft_skills %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.skills.other %}
+                <div class="card">
+                    <h3 class="skill-category-title">✨ Other Capabilities</h3>
+                    <div class="skill-badges">
+                        {% for skill in data.skills.other %}
+                        <span class="badge">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Work Experience Section -->
+        {% if data.experience %}
+        <section id="experience" class="section">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                {% for item in data.experience %}
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="role-title">{{ item.role }}</div>
+                                <div class="company-name">{{ item.company }}</div>
+                            </div>
+                            <div class="timeline-date">
+                                {{ item.start_date }}{% if item.end_date %} → {{ item.end_date }}{% endif %}
+                            </div>
+                        </div>
+
+                        {% if item.location %}
+                        <div class="timeline-location">📍 {{ item.location }}</div>
+                        {% endif %}
+
+                        {% if item.description %}
+                        <ul class="timeline-bullets">
+                            {% for desc in item.description %}
+                            <li>{{ desc }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+
+                        {% if item.technologies %}
+                        <div class="tech-tags">
+                            {% for tech in item.technologies %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Projects Section -->
+        {% if data.projects %}
+        <section id="projects" class="section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="cards-grid">
+                {% for proj in data.projects %}
+                <div class="card project-card">
+                    <div>
+                        <div class="project-title">{{ proj.name }}</div>
+                        <p class="project-desc">{{ proj.description }}</p>
+                    </div>
+
+                    <div>
+                        {% if proj.technologies %}
+                        <div class="tech-tags" style="margin-bottom: 1rem;">
+                            {% for tech in proj.technologies %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        {% if proj.url %}
+                        <a href="{{ proj.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="width: 100%; justify-content: center;">
+                            🔗 View Project
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Education Section -->
+        {% if data.education %}
+        <section id="education" class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="cards-grid">
+                {% for edu in data.education %}
+                <div class="card">
+                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary);">
+                        {{ edu.degree }}{% if edu.field %} in {{ edu.field }}{% endif %}
+                    </h3>
+                    <div style="font-size: 1.05rem; font-weight: 600; color: var(--accent); margin-top: 0.25rem;">
+                        {{ edu.institution }}
+                    </div>
+                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        📅 {{ edu.start_date }}{% if edu.end_date %} - {{ edu.end_date }}{% endif %}
+                    </div>
+                    {% if edu.grade %}
+                    <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin-top: 0.5rem;">
+                        🎯 Grade/GPA: {{ edu.grade }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Certifications Section -->
+        {% if data.certifications %}
+        <section id="certifications" class="section">
+            <h2 class="section-title">Certifications</h2>
+            <div class="cards-grid">
+                {% for cert in data.certifications %}
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">{{ cert.name }}</h3>
+                        <div style="font-size: 0.95rem; font-weight: 600; color: var(--accent); margin-top: 0.25rem;">
+                            {{ cert.issuer }}
+                        </div>
+                        {% if cert.date %}
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem;">
+                            🗓️ {{ cert.date }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if cert.url %}
+                    <div style="margin-top: 1rem;">
+                        <a href="{{ cert.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                            📜 Verify Credential
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Achievements Section -->
+        {% if data.achievements %}
+        <section id="achievements" class="section">
+            <h2 class="section-title">Key Achievements</h2>
+            <div class="card">
+                <ul class="achievements-list">
+                    {% for ach in data.achievements %}
+                    <li>{{ ach }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Languages Section -->
+        {% if data.languages %}
+        <section id="languages" class="section">
+            <h2 class="section-title">Languages</h2>
+            <div class="card" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                {% for lang in data.languages %}
+                <span class="badge" style="font-size: 0.95rem; padding: 0.5rem 1rem;">🗣️ {{ lang }}</span>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Get in Touch</h2>
+            <div class="contact-grid">
+                {% if data.personal.email %}
+                <a href="mailto:{{ data.personal.email }}" class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">{{ data.personal.email }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if data.personal.phone %}
+                <a href="tel:{{ data.personal.phone }}" class="contact-card">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <div class="contact-label">Phone</div>
+                        <div class="contact-value">{{ data.personal.phone }}</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if data.personal.location %}
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <div class="contact-label">Location</div>
+                        <div class="contact-value">{{ data.personal.location }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if data.social_links.linkedin %}
+                <a href="{{ data.social_links.linkedin }}" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <div class="contact-icon">💼</div>
+                    <div>
+                        <div class="contact-label">LinkedIn</div>
+                        <div class="contact-value">Profile</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if data.social_links.github %}
+                <a href="{{ data.social_links.github }}" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <div class="contact-icon">⚡</div>
+                    <div>
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">Profile</div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if data.social_links.portfolio %}
+                <a href="{{ data.social_links.portfolio }}" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <div class="contact-icon">🌐</div>
+                    <div>
+                        <div class="contact-label">Website</div>
+                        <div class="contact-value">Portfolio</div>
+                    </div>
+                </a>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; {{ data.personal.name if data.personal.name else 'Portfolio' }}. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--text-muted);">
+                Generated automatically using AI Resume to Portfolio Generator
+            </p>
+        </div>
+    </footer>
+
+    <!-- Theme Switcher JavaScript -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const html = document.documentElement;
+
+        function setTheme(theme) {
+            html.setAttribute('data-theme', theme);
+            if (theme === 'dark') {
+                themeIcon.textContent = '☀️';
+                themeText.textContent = 'Light';
+            } else {
+                themeIcon.textContent = '🌙';
+                themeText.textContent = 'Dark';
+            }
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+    </script>
+</body>
+</html>
