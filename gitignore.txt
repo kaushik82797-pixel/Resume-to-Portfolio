@@ -1,0 +1,21 @@
+# Environment variables & secrets
+.env
+
+# Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# IDE / Editor Files
+.vscode/
+.idea/
+
+# Output folder contents (keep folder if needed)
+output/*.html
+!output/.gitkeep
