@@ -237,6 +237,4 @@ Open this file in your browser to view your brand new portfolio!
 
 ---
 
-## 📜 License & Acknowledgments
 
-Built with ❤️ using **Google Gemini 2.5 Flash**, **Pydantic**, **PyMuPDF**, and **Jinja2**.
